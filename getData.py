@@ -7,25 +7,25 @@ from time import sleep
 
 if __name__ == '__main__':
     # 房间号
-    i = [(5,1),(5,6),(5,10),(5,14),(5,9),(5,2),(5,3),(5,5),(5,7),(5,12)]
-    j = -1
+    i = [(8, 1, 10), (8, 7, 50), (8, 12, 100)]
     for room in i:
-        if j <= 7:
-            j = j + 2
-            Interface.controlRoom(room[0], room[1], j*10)
-            with open("setting.txt", "a") as f:
-                f.write("room:{} ,kaidu:{}\n".format(room,j*10))
-    while True:
+        Interface.controlRoom(room[0], room[1], room[2])
+    # 写入开度设置
+    with open("setting.txt", "a") as f:
         for room in i:
-            value = Interface.dataForPID(room[0],room[1])
-            t_set = value[0];  #设定的温度
-            t_now = value[1];  #当前温度
-            kaidu_now = value[2];   #当前开度
-            date = time.strftime("%Y-%m-%dY%H:%M:%S")
-            localtime = time.time()
-            #写入文件
-            with open("state_in_{}_{}.txt".format(room[0],room[1]), "a") as f:
-                f.write("{}\t{}\t{}\t{}\t{}\t{}\t{}\n".format(localtime,date,room[0],room[1],t_set,t_now,kaidu_now))
-            #打印输出
-            print(localtime,date,room,t_set,t_now,kaidu_now)
-        sleep(20)
+            f.write("room:{} ,kaidu:{}\n".format(room[0:2], room[2]))
+    while True:
+        try:
+            for room in i:
+                #设定的温度, 当前温度, 当前开度
+                t_set, t_now, kaidu_now = Interface.dataForPID(room[0], room[1])
+                date = time.strftime("%Y-%m-%d %H:%M:%S")
+                localtime = time.time()
+                #写入文件
+                with open("state_in_{}_{}.txt".format(room[0],room[1]), "a") as f:
+                    f.write("{}\t{}\t{}\t{}\t{}\t{}\t{}\n".format(localtime,date,room[0],room[1],t_set,t_now,kaidu_now))
+                #打印输出
+                print(localtime,date,room,t_set,t_now,kaidu_now)
+        except Exception as e:
+            print("*********************读取温度数据出现错误...*******************")
+        sleep(30)
