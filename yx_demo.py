@@ -22,7 +22,7 @@ if __name__ == '__main__':
                 with open("state_in_{}_{}.txt".format(room[0],room[1]), "a") as f:
                     f.write("{}\t{}\t{}\t{}\t{}\t{}\t{}\n".format(localtime, date, room[0], room[1], t_set, t_now, kaidu_now))
                 #打印输出
-                print(localtime,date,room,t_set,t_now,kaidu_now)
+                print(localtime, date, room, t_set, t_now, kaidu_now)
         except Exception as e:
             pass      
         sleep(20)
