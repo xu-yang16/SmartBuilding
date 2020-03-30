@@ -14,3 +14,13 @@ room: (5, 6), kaidu: 70
 room: (5, 7), kaidu: 80
 room: (5, 9), kaidu: 90
 room: (5, 12), kaidu: 100
+******************Time: 2020-03-29 19:39:05********************
+room: (5, 5), kaidu: 100
+******************Time: 2020-03-29 22:57:03********************
+room: (5, 1), kaidu: 60
+room: (5, 3), kaidu: 60
+room: (5, 5), kaidu: 60
+room: (5, 6), kaidu: 60
+room: (5, 7), kaidu: 60
+room: (5, 9), kaidu: 60
+room: (5, 12), kaidu: 60

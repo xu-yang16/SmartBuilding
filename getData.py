@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# ping 39.100.78.210
 import sys
 sys.path.append('C:\\Users\\xuyang\\Desktop\\DSP2.0\\IoT')
 import Interface
@@ -7,7 +8,9 @@ from time import sleep
 
 if __name__ == '__main__':
     # 房间号
-    i = [(5, 1, 10), (5, 3, 50), (5, 5, 60), (5, 6, 70), (5, 7, 80), (5, 9, 90), (5, 12, 100)]
+    i = [(5, 1, 60), (5, 3, 60), (5, 5, 60), (5, 6, 60), (5, 7, 60), (5, 9, 60), (5, 12, 60)]
+    # i = [(5, 5, 100)]
+    '''
     for room in i:
         Interface.controlRoom(room[0], room[1], room[2])
     # 写入开度设置
@@ -15,6 +18,7 @@ if __name__ == '__main__':
         f.write("******************Time: {}********************\n".format(time.strftime("%Y-%m-%d %H:%M:%S")))
         for room in i:
             f.write("room: {}, kaidu: {}\n".format(room[0:2], room[2]))
+    '''
     while True:
         try:
             for room in i:
