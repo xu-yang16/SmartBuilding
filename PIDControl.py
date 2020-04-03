@@ -15,8 +15,8 @@ if __name__ == '__main__':
     i = [(5, 1)]
     error_sum = 0
     # 初始值
-    t_set, t_now, kaidu_now = Interface.dataForPID(5, 1)
-    t_set = 22.5
+    t_set, t_now, kaidu_now, time_now = Interface.dataForPID(5, 1)
+    t_set = 19.5
     var_open = Kp * (t_now - t_set) + 60
     if var_open >= 100:
         var_open = 100
@@ -26,18 +26,17 @@ if __name__ == '__main__':
     while True:
         try:
             for room in i:
-                # 设定的温度, 当前温度, 当前开度
-                t_set, t_now, kaidu_now = Interface.dataForPID(room[0], room[1])
+                # 设定的温度, 当前温度, 当前开度, 当前时间
+                t_set, t_now, kaidu_now, time_now = Interface.dataForPID(room[0], room[1])
                 date = time.strftime("%Y-%m-%d %H:%M:%S")
-                localtime = time.time()
                 #写入文件
                 with open("state_in_{}_{}.txt".format(room[0],room[1]), "a") as f:
-                    f.write("{}\t{}\t{}\t{}\t{}\t{}\t{}\n".format(date, room[0], room[1], t_set, t_now, kaidu_now, var_open))
+                    f.write("{}:{}:{}\t{}\t{}\t{}\t{}\t{}\t{}\n".format(time_now[0],time_now[1],time_now[2], room[0], room[1], t_set, t_now, kaidu_now, var_open))
                 #打印输出
-                print(localtime, date, room, t_set, t_now, kaidu_now, var_open)
+                print("{}:{}:{}\t{}\t{}\t{}\t{}\t{}\t{}\n".format(time_now[0],time_now[1],time_now[2], room[0], room[1], t_set, t_now, kaidu_now, var_open))
                 
                 # 控制律
-                t_set = 22.5
+                t_set = 19.5
                 var_open = var_open + Kp * (t_now - t_last) + Ki * (t_now - t_set) + Kd * (t_now - t_last)
                 t_last = t_now
                 if var_open >= 100:
