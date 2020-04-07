@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # ping 39.100.78.210
 import sys
-sys.path.append('C:\\Users\\xuyang\\Desktop\\DSP2.0\\IoT')
+sys.path.append('../IoT')
 import Interface
 import time
 from time import sleep
