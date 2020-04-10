@@ -12,10 +12,10 @@ Kd = 15
 if __name__ == '__main__':
     # 房间号
     # i = [(5, 1, 60), (5, 3, 60), (5, 5, 60), (5, 6, 60), (5, 7, 60), (5, 9, 60), (5, 12, 60)]
-    i = [(5, 1)]
+    i = [(5, 3)]
     
     # 初始值
-    t_set, t_now, kaidu_now, time_now = Interface.dataForPID(5, 1)
+    t_set, t_now, kaidu_now, time_now = Interface.dataForPID(5, 3)
     t_set = 16.5
     error_last = t_now - t_set
     error_llast = error_last
