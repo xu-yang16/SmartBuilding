@@ -14,6 +14,8 @@ if __name__ == '__main__':
     # i = [(5, 1, 60), (5, 3, 60), (5, 5, 60), (5, 6, 60), (5, 7, 60), (5, 9, 60), (5, 12, 60)]
     i = [(5, 3)]
     
+    # 文件名
+    txtName = "./control_record/PID_{}_{}_{}_room_".format(Kp, Ki, Kd)
     # 初始值
     t_set, t_now, kaidu_now, time_now = Interface.dataForPID(5, 3)
     t_set = 16.5
@@ -28,7 +30,7 @@ if __name__ == '__main__':
                 t_set, t_now, kaidu_now, time_now = Interface.dataForPID(room[0], room[1])
                 #写入文件
                 t_set = 16.5
-                with open("state_in_{}_{}.txt".format(room[0],room[1]), "a") as f:
+                with open(txtName + "{}_{}.txt".format(room[0],room[1]), "a") as f:
                     f.write("{}:{}:{}\t{}\t{}\t{}\t{}\t{}\t{}\n".format(time_now[0],time_now[1],time_now[2], room[0], room[1], t_set, t_now, kaidu_now, var_open))
                 #打印输出
                 print("{}:{}:{}\t{}\t{}\t{}\t{}\t{}\t{}\n".format(time_now[0],time_now[1],time_now[2], room[0], room[1], t_set, t_now, kaidu_now, var_open))
