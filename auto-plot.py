@@ -1,9 +1,11 @@
 import os
+import re
 import pandas as pd
 from matplotlib import pyplot as plt
 import matplotlib.dates as mdates
 from matplotlib.dates import AutoDateLocator
 from datetime import datetime
+from time import sleep
 
 def get_dir(path):  # 获取目录路径
         print("所有目录路径是：")
@@ -14,15 +16,15 @@ def get_dir(path):  # 获取目录路径
 # 输出当前目录非git的文件夹name
 # get_dir("./")
 
-def myplot():
+def fig_name(txtName):
+    name = re.split('/|\.', txtName)
+    return(name[2]+"_"+name[3]+".png")
+
+def myplot(txtName):
     # plot daily_temp_record
-    txtName = "./daily_temp_record/state_in_6_1.txt"
-    txtName = "./test.txt"
-    df = pd.read_table('test.txt', sep='[ |\t]', header=None, engine='python')
+    df = pd.read_table(txtName, sep='[ |\t]', header=None, engine='python')
     df.columns = ['time', 'floor_id', 'room_id', 'set_tmp', 'real_tmp', 'var_open']
     df['time'] = pd.to_datetime(df['time'], format='%d:%H:%M:%S')
-
-    print(df)
     '''
     fig = plt.figure()
     ax1 = fig.add_subplot(2,1,1)
@@ -34,10 +36,8 @@ def myplot():
     '''
     # 配置时间坐标轴
     plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%H:%M:%S')) # 显示时间坐标的格式
-
     autodates = AutoDateLocator()# 时间间隔自动选取
     plt.gca().xaxis.set_major_locator(autodates)
-
     plt.figure()
     
 
@@ -60,13 +60,22 @@ def myplot():
     plt.axis("tight")
     # 坐标轴，标题设置
     
-    
-    plt.savefig('test.png')
+    plt.savefig("./realtime_figure/"+fig_name(txtName))
     plt.show()
     #'''
 
-
+def auto_plot(txtNameList):
+    while 1:
+        try:
+            for txtName in txtNameList:
+                if not(os.path.exists(txtName)):
+                    continue
+                myplot(txtName)
+        except Exception as e:
+            print("*********************Plot出现错误...*******************")
+        sleep(600)
 
 
 if __name__ == "__main__":
-    myplot()
+    txtNameList = ["./daily_temp_record/state_in_6_1.txt","./control_record/PID_50_5_15_room_5_1.txt", "./floor_5_step/state_in_5_1.txt"]
+    auto_plot(txtNameList)
