@@ -11,7 +11,7 @@ from time import sleep
 
 def daily_temp_record(i):
     TIME_FLAG = 0
-    DAY = 1
+    DAY = 0
     for room in i:
         Interface.controlRoom(*room[0:3])
     # 写入开度设置
@@ -24,16 +24,17 @@ def daily_temp_record(i):
                 #设定的温度, 当前温度, 当前开度
                 t_set, t_now, kaidu_now, time_now = Interface.dataForPID(*room[0:2])
                 # 写入日期信息
-                if time_now[0] == 0 and TIME_FLAG == 0:
+                if time_now[0] == '0' and TIME_FLAG == 0:
                     DAY = DAY + 1
+                    print("*********DAY{}********".format(DAY))
                     TIME_FLAG = 1
-                elif time_now[0] != 0:
+                elif time_now[0] != '0':
                     TIME_FLAG = 0
                 #写入文件
                 with open("./daily_temp_record/state_in_{}_{}.txt".format(room[0],room[1]), "a") as f:
                     f.write("{}:{}:{}:{}\t{}\t{}\t{}\t{}\t{}\n".format(DAY,*time_now[0:3], *room[0:2], t_set, t_now, kaidu_now))
                 #打印输出
-                print("{}:{}:{}:{}\t{}\t{}\t{}\t{}\t{}\n".format(DAY,*time_now[0:3], *room[0:2], t_set, t_now, kaidu_now))
+                # print("{}:{}:{}:{}\t{}\t{}\t{}\t{}\t{}\n".format(DAY,*time_now[0:3], *room[0:2], t_set, t_now, kaidu_now))
         except Exception as e:
             print("*********************读取温度数据出现错误...*******************")
         sleep(60)

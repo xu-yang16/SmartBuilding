@@ -10,7 +10,7 @@ import datetime
 def step(i):
     # 记录时间
     TIME_FLAG = 0
-    DAY = 1
+    DAY = 0
     # flag=0标志着开度为70; flag=1标志着开度为80
     flag = 0
     # 开始记录的时间
@@ -29,9 +29,9 @@ def step(i):
         try:
             # 设定开始阶跃的时刻: 5小时后
             passtime = datetime.datetime.now() - start_time
-            if passtime.seconds >= 10 * 60 * 60:
+            if passtime.seconds >= 6 * 60 * 60:
                 break
-            elif passtime.seconds >= 5 * 60 * 60 and flag == 0:
+            elif passtime.seconds >= 3 * 60 * 60 and flag == 0:
                 flag = 1
                 # 对(5,*)房间给70->80的阶跃信号，记录阶跃响应曲线。
                 i=[]
@@ -49,10 +49,10 @@ def step(i):
                 # 设定的温度, 当前温度, 当前开度, 当前时间
                 t_set, t_now, kaidu_now, time_now = Interface.dataForPID(*room[0:2])
                 # 写入日期信息
-                if time_now[0] == 0 and TIME_FLAG == 0:
+                if time_now[0] == '0' and TIME_FLAG == 0:
                     DAY = DAY + 1
                     TIME_FLAG = 1
-                elif time_now[0] != 0:
+                elif time_now[0] != '0':
                     TIME_FLAG = 0
                 #写入文件
                 with open("./floor_5_step/state_in_{}_{}.txt".format(*room[0:2]), "a") as f:
