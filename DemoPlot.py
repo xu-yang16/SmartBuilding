@@ -26,19 +26,8 @@ def myplot(txtName):
     df = pd.read_table(txtName, sep='[ |\t]', header=None, engine='python')
     df.columns = ['time', 'floor_id', 'room_id', 'set_tmp', 'real_tmp', 'var_open']
     df['time'] = pd.to_datetime(df['time'], format='%d:%H:%M:%S')
-    '''
-    fig = plt.figure()
-    ax1 = fig.add_subplot(2,1,1)
-    ax2 = fig.add_subplot(2,1,2)
 
-    df.plot(ax=ax1, x='time', y='real_tmp', grid=True, legend=False, color='r')
-    df.plot(ax=ax2, x='time', y='var_open', grid=True, legend=False,color='b')
-    plt.savefig('test.png')
-    '''
-    # 配置时间坐标轴
     plt.figure()
-    
-
     plt.subplot(2,1,1)
     plt.plot_date(df['time'], df['real_tmp'],linestyle="-",marker="None",color='indigo')
     # 坐标轴，标题设置
@@ -48,7 +37,6 @@ def myplot(txtName):
     plt.gcf().autofmt_xdate()  # 自动旋转日期标记
     plt.grid(True)
     plt.axis("tight")
-    plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%H:%M:%S')) # 显示时间坐标的格式
     autodates = AutoDateLocator()# 时间间隔自动选取
     plt.gca().xaxis.set_major_locator(autodates)
 
@@ -61,28 +49,17 @@ def myplot(txtName):
     plt.gcf().autofmt_xdate()  # 自动旋转日期标记
     plt.grid(True)
     plt.axis("tight")
-    plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%H:%M:%S')) # 显示时间坐标的格式
+    plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%d-%H:%M')) # 显示时间坐标的格式
     autodates = AutoDateLocator()# 时间间隔自动选取
     plt.gca().xaxis.set_major_locator(autodates)
     
     
-    plt.savefig("./realtime_figure/"+fig_name(txtName))
+    plt.savefig(fig_name(txtName))
     plt.show()
     #'''
 
-def auto_plot(txtNameList):
-    while 1:
-        try:
-            print("time:{}\n".format(time.strftime("%Y-%m-%d %H:%M:%S")))
-            for txtName in txtNameList:
-                if not(os.path.exists(txtName)):
-                    continue
-                myplot(txtName)
-        except Exception as e:
-            print("*********************Plot出现错误...*******************")
-        sleep(600)
 
 
 if __name__ == "__main__":
-    txtNameList = ["./daily_temp_record/state_in_6_1.txt","./control_record/PID_50_5_15_room_5_1.txt", "./floor_5_step/state_in_5_1.txt"]
-    auto_plot(txtNameList)
+    txtNameList = "./0408-0416_daily_temp_record/state_in_6_1.txt"
+    myplot(txtNameList)

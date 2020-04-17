@@ -15,6 +15,10 @@ def step(i):
     flag = 0
     # 开始记录的时间
     start_time = datetime.datetime.now()
+
+    # 各房间风阀开度初始化为70
+    for room in i: 
+        Interface.controlRoom(*room[0:3])
     # 写入开度设置
     with open("./floor_5_step/setting.txt", "a") as f: 
         f.write("****************************************变化风阀开度**************************************\n")
@@ -45,7 +49,7 @@ def step(i):
                 # 设定的温度, 当前温度, 当前开度, 当前时间
                 t_set, t_now, kaidu_now, time_now = Interface.dataForPID(*room[0:2])
                 # 写入日期信息
-                if(time_now[0] == 0 and TIME_FLAG == 0):
+                if time_now[0] == 0 and TIME_FLAG == 0:
                     DAY = DAY + 1
                     TIME_FLAG = 1
                 elif time_now[0] != 0:
