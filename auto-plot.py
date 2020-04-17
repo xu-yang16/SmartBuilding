@@ -45,7 +45,7 @@ def myplot(txtName):
     # 坐标轴，标题设置
     plt.xticks([])
     plt.ylabel('Temperature',size=10)
-    plt.title('Temperature record',size=10)
+    plt.title(time.strftime("%H:%M"),size=10) #plt.title('Temperature record',size=10)
     plt.gcf().autofmt_xdate()  # 自动旋转日期标记
     plt.grid(True)
     plt.axis("tight")
@@ -74,7 +74,7 @@ def myplot(txtName):
 def auto_plot(txtNameList):
     while 1:
         try:
-            print("time:{}\n".format(time.strftime("%Y-%m-%d %H:%M:%S")))
+            print("time:{}".format(time.strftime("%Y-%m-%d %H:%M:%S")))
             for txtName in txtNameList:
                 if not(os.path.exists(txtName)):
                     continue
