@@ -68,7 +68,7 @@ def myplot(txtName):
     
     
     plt.savefig("./realtime_figure/"+fig_name(txtName),dpi=500)
-    plt.show()
+    plt.close()
     #'''
 
 def auto_plot(txtNameList):

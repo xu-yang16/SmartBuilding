@@ -23,7 +23,7 @@ def step(i):
     with open("./floor_5_step/setting.txt", "a") as f: 
         f.write("****************************************变化风阀开度**************************************\n")
         for room in i:
-            f.write("time:{}\troom:{}\tkaidu:{}\n".format(time.strftime("%Y-%m-%d %H:%M:%S"), room[0:2], room[2]))
+            f.write("time:{}\troom:{}\tvar_open:{}\n".format(time.strftime("%Y-%m-%d %H:%M:%S"), room[0:2], room[2]))
     
     while True:
         try:
@@ -35,15 +35,16 @@ def step(i):
                 flag = 1
                 # 对(5,1~15)房间给70->80的阶跃信号，记录阶跃响应曲线。
                 i=[]
-                for i in range(1, 16+0):
-                    i.append((5, i, 80))
+                for index in range(1, 16+0):
+                    i.append((5, index, 80))
+                i.append((5, 16, 70))
                 for room in i: 
                         Interface.controlRoom(*room[0:3])
                 # 写入开度设置
                 with open("./floor_5_step/setting.txt", "a") as f: 
                     f.write("****************************************变化风阀开度**************************************\n")
                     for room in i:
-                        f.write("time:{}\troom:{}\tkaidu:{}\n".format(time.strftime("%Y-%m-%d %H:%M:%S"), room[0:2], room[2]))
+                        f.write("time:{}\troom:{}\tvar_open:{}\n".format(time.strftime("%Y-%m-%d %H:%M:%S"), room[0:2], room[2]))
             # 记录房间温度变化曲线
             for room in i:
                 # 设定的温度, 当前温度, 当前开度, 当前时间
