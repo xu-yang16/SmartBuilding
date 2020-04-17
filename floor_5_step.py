@@ -10,7 +10,7 @@ import datetime
 def step(i):
     # 记录时间
     TIME_FLAG = 0
-    DAY = 0
+    DAY = 1
     # flag=0标志着开度为70; flag=1标志着开度为80
     flag = 0
     # 开始记录的时间
@@ -33,9 +33,9 @@ def step(i):
                 break
             elif passtime.seconds >= 3 * 60 * 60 and flag == 0:
                 flag = 1
-                # 对(5,*)房间给70->80的阶跃信号，记录阶跃响应曲线。
+                # 对(5,1~15)房间给70->80的阶跃信号，记录阶跃响应曲线。
                 i=[]
-                for i in range(1, 16+1):
+                for i in range(1, 16+0):
                     i.append((5, i, 80))
                 for room in i: 
                         Interface.controlRoom(*room[0:3])
@@ -57,8 +57,8 @@ def step(i):
                 #写入文件
                 with open("./floor_5_step/state_in_{}_{}.txt".format(*room[0:2]), "a") as f:
                     f.write("{}:{}:{}:{}\t{}\t{}\t{}\t{}\t{}\n".format(DAY,*time_now[0:3], *room[0:2], t_set, t_now, kaidu_now))
-                #打印输出
-                print("{}:{}:{}:{}\t{}\t{}\t{}\t{}\t{}\n".format(DAY,*time_now[0:3], *room[0:2], t_set, t_now, kaidu_now))
+            #打印输出
+            print("{}:{}:{}:{}\t{}\t{}\t{}\t{}\t{}\n".format(DAY,*time_now[0:3], *room[0:2], t_set, t_now, kaidu_now))
         except Exception as e:
             print("*********************读取温度数据出现错误...*******************")
         sleep(60)

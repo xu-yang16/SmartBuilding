@@ -11,7 +11,7 @@ from time import sleep
 
 def daily_temp_record(i):
     TIME_FLAG = 0
-    DAY = 0
+    DAY = 1
     for room in i:
         Interface.controlRoom(*room[0:3])
     # 写入开度设置

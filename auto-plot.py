@@ -7,6 +7,7 @@ from matplotlib.dates import AutoDateLocator
 from datetime import datetime
 import time
 from time import sleep
+plt.style.use('ggplot')
 
 def get_dir(path):  # 获取目录路径
         print("所有目录路径是：")
@@ -48,7 +49,7 @@ def myplot(txtName):
     plt.gcf().autofmt_xdate()  # 自动旋转日期标记
     plt.grid(True)
     plt.axis("tight")
-    plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%H:%M:%S')) # 显示时间坐标的格式
+    plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%H:%M')) # 显示时间坐标的格式
     autodates = AutoDateLocator()# 时间间隔自动选取
     plt.gca().xaxis.set_major_locator(autodates)
 
@@ -61,12 +62,12 @@ def myplot(txtName):
     plt.gcf().autofmt_xdate()  # 自动旋转日期标记
     plt.grid(True)
     plt.axis("tight")
-    plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%H:%M:%S')) # 显示时间坐标的格式
+    plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%H:%M')) # 显示时间坐标的格式
     autodates = AutoDateLocator()# 时间间隔自动选取
     plt.gca().xaxis.set_major_locator(autodates)
     
     
-    plt.savefig("./realtime_figure/"+fig_name(txtName))
+    plt.savefig("./realtime_figure/"+fig_name(txtName),dpi=500)
     plt.show()
     #'''
 

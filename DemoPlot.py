@@ -7,6 +7,7 @@ from matplotlib.dates import AutoDateLocator
 from datetime import datetime
 import time
 from time import sleep
+plt.style.use('ggplot')
 
 def get_dir(path):  # 获取目录路径
         print("所有目录路径是：")
@@ -54,7 +55,7 @@ def myplot(txtName):
     plt.gca().xaxis.set_major_locator(autodates)
     
     
-    plt.savefig(fig_name(txtName))
+    plt.savefig(fig_name(txtName),dpi=500)
     plt.show()
     #'''
 
