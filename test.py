@@ -1,3 +1,4 @@
+import os
 import sys
 sys.path.append('../IoT')
 import Interface
@@ -5,9 +6,11 @@ import time
 from time import sleep
 
 
-def test():
-    t_set, t_now, kaidu_now, time_now = Interface.dataForPID(6, 1)
-    print(time_now[0]=='0')
+def get_dir(path):  # 获取目录路径
+        print("所有目录路径是：")
+        for root, dirs, files in os.walk(path):
+            for file in files:
+                print(os.path.join(path,file))
 
 if __name__ == "__main__":
-    test()
+    get_dir("./control_record/")

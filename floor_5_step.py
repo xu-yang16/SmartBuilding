@@ -1,11 +1,21 @@
 # -*- coding: utf-8 -*-
 # ping 39.100.78.210
+import os
 import sys
 sys.path.append('../IoT')
 import Interface
 import time
 from time import sleep
 import datetime
+
+
+def del_old_dir(path):  # 获取目录路径
+    print("删除文件：")
+    for root, dirs, files in os.walk(path):
+        for file in files:
+            print(os.path.join(path,file))
+            os.remove(os.path.join(path,file))
+    print("\n")
 
 def step(i):
     # 记录时间
@@ -29,9 +39,15 @@ def step(i):
         try:
             # 设定开始阶跃的时刻: 5小时后
             passtime = datetime.datetime.now() - start_time
-            if passtime.seconds >= 6 * 60 * 60:
+            if passtime.seconds >= 8 * 60 * 60:
+                # 对(5,1~16)房间设置回到70，退出程序。
+                i=[]
+                for index in range(1, 16+1):
+                    i.append((5, index, 70))
+                for room in i: 
+                        Interface.controlRoom(*room[0:3])
                 break
-            elif passtime.seconds >= 3 * 60 * 60 and flag == 0:
+            elif passtime.seconds >= 5 * 60 * 60 and flag == 0:
                 flag = 1
                 # 对(5,1~15)房间给70->80的阶跃信号，记录阶跃响应曲线。
                 i=[]
@@ -65,6 +81,8 @@ def step(i):
         sleep(60)
 
 if __name__ == '__main__':
+    # 删除上一次的文件
+    del_old_dir("./floor_5_step/")
     # 房间号
     i=[]
     for index in range(1, 16+1):
