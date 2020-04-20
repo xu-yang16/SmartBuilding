@@ -25,21 +25,12 @@ def fig_name(txtName):
 def myplot(txtName):
     # plot daily_temp_record
     df = pd.read_table(txtName, sep='[ |\t]', header=None, engine='python')
-    df.columns = ['time', 'floor_id', 'room_id', 'set_tmp', 'real_tmp', 'var_open']
+    columnNames = ['time', 'floor_id', 'room_id', 'set_tmp', 'real_tmp', 'real_var_open', 'var_open']
+    df.columns = columnNames[0:df.shape[1]]
     df['time'] = pd.to_datetime(df['time'], format='%d:%H:%M:%S')
-    '''
-    fig = plt.figure()
-    ax1 = fig.add_subplot(2,1,1)
-    ax2 = fig.add_subplot(2,1,2)
 
-    df.plot(ax=ax1, x='time', y='real_tmp', grid=True, legend=False, color='r')
-    df.plot(ax=ax2, x='time', y='var_open', grid=True, legend=False,color='b')
-    plt.savefig('test.png')
-    '''
     # 配置时间坐标轴
     plt.figure()
-    
-
     plt.subplot(2,1,1)
     plt.plot_date(df['time'], df['real_tmp'],linestyle="-",marker="None",color='indigo')
     # 坐标轴，标题设置
@@ -54,7 +45,7 @@ def myplot(txtName):
     plt.gca().xaxis.set_major_locator(autodates)
 
     plt.subplot(2,1,2)
-    plt.plot_date(df['time'], df['var_open'],linestyle="-",marker="None",color='firebrick')
+    plt.plot_date(df['time'], df['real_var_open'],linestyle="-",marker="None",color='firebrick')
     # 坐标轴，标题设置
     plt.xlabel('Time',size=10)
     plt.ylabel('var_open',size=10)

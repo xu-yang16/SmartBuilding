@@ -31,24 +31,27 @@ def PIDControl(Kp, Ki, Kd, i):
                     TIME_FLAG = 1
                 elif time_now[0] != '0':
                     TIME_FLAG = 0
+                # 设定温度为24度
+                t_set = 24
                 #写入文件
-                t_set = 16.5
                 with open(txtName + "{}_{}.txt".format(*room[0:2]), "a") as f:
                     f.write("{}:{}:{}:{}\t{}\t{}\t{}\t{}\t{}\t{}\n".format(DAY,*time_now[0:3], *room[0:2], t_set, t_now, kaidu_now, var_open))
                 #打印输出
                 print("{}:{}:{}:{}\t{}\t{}\t{}\t{}\t{}\t{}\n".format(DAY,*time_now[0:3], *room[0:2], t_set, t_now, kaidu_now, var_open))
                 
-                # 控制律
-                error_now = t_now - t_set
-                var_open = var_open + Kp * (error_now - error_last) + Ki * error_now + Kd * (error_now - 2 * error_last + error_llast)
-                error_llast = error_last
-                error_last = error_now
-                # 限制幅度
-                if var_open >= 100:
-                    var_open = 100
-                elif var_open <= 0:
-                    var_open = 0
-                Interface.controlRoom(*room[0:2], var_open)
+                # 执行温度控制的时间范围：8:00~18:00
+                if int(time_now[0])>=8 and int(time_now[0])<=18:
+                    # 控制律
+                    error_now = t_now - t_set
+                    var_open = var_open + Kp * (error_now - error_last) + Ki * error_now + Kd * (error_now - 2 * error_last + error_llast)
+                    error_llast = error_last
+                    error_last = error_now
+                    # 限制幅度
+                    if var_open >= 100:
+                        var_open = 100
+                    elif var_open <= 0:
+                        var_open = 0
+                    Interface.controlRoom(*room[0:2], var_open)
         except Exception as e:
             print("*********************读取温度数据出现错误...*******************")
         sleep(60)
