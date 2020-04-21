@@ -15,7 +15,7 @@ def PIDControl(Kp, Ki, Kd, i):
     txtName = "./control_record/PID_{}_{}_{}_room_".format(Kp, Ki, Kd)
     # 初始值
     t_set, t_now, kaidu_now, time_now = Interface.dataForPID(5, 3)
-    t_set = 16.5
+    t_set = 22
     error_last = t_now - t_set
     error_llast = error_last
     t_last = t_now
@@ -31,8 +31,8 @@ def PIDControl(Kp, Ki, Kd, i):
                     TIME_FLAG = 1
                 elif time_now[0] != '0':
                     TIME_FLAG = 0
-                # 设定温度为24度
-                t_set = 24
+                # 设定温度为22度
+                t_set = 22
                 #写入文件
                 with open(txtName + "{}_{}.txt".format(*room[0:2]), "a") as f:
                     f.write("{}:{}:{}:{}\t{}\t{}\t{}\t{}\t{}\t{}\n".format(DAY,*time_now[0:3], *room[0:2], t_set, t_now, kaidu_now, var_open))
@@ -60,6 +60,7 @@ if __name__ == '__main__':
     for index in range(1, 16 + 1):
         i.append((5, index))
     
+    i=[(5,1)]
     # PID参数设置
     Kp = 50
     Ki = 5
