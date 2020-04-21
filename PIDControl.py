@@ -40,7 +40,7 @@ def PIDControl(Kp, Ki, Kd, i):
                 print("{}:{}:{}:{}\t{}\t{}\t{}\t{}\t{}\t{}\n".format(DAY,*time_now[0:3], *room[0:2], t_set, t_now, kaidu_now, var_open))
                 
                 # 执行温度控制的时间范围：8:00~18:00
-                if int(time_now[0])>=8 and int(time_now[0])<=18:
+                if int(time_now[0])>=0 and int(time_now[0])<=24:
                     # 控制律
                     error_now = t_now - t_set
                     var_open = var_open + Kp * (error_now - error_last) + Ki * error_now + Kd * (error_now - 2 * error_last + error_llast)

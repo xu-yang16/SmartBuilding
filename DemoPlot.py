@@ -28,7 +28,9 @@ def myplot(txtName):
     
     # plot daily_temp_record
     df = pd.read_table(txtName, sep='[ |\t]', header=None, engine='python')
-    df.columns = ['time', 'floor_id', 'room_id', 'set_tmp', 'real_tmp', 'var_open']
+    columnNames = ['time', 'floor_id', 'room_id', 'set_tmp', 'real_tmp', 'real_var_open', 'var_open']
+    df.columns = columnNames[0:df.shape[1]]
+    
     df['time'] = pd.to_datetime(df['time'], format='%d:%H:%M:%S')
     plt.plot_date(df['time'], df['real_tmp'],linestyle="-",marker="None",color='indigo')
 
@@ -63,5 +65,5 @@ def myplot(txtName):
 
 
 if __name__ == "__main__":
-    txtName = "./0408-0416_daily_temp_record/state_in_6_1.txt"
+    txtName = "./control_record/state_in_5_2.txt"
     myplot(txtName)

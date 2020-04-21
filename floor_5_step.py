@@ -39,7 +39,7 @@ def step(i):
         try:
             # 设定开始阶跃的时刻: 5小时后
             passtime = datetime.datetime.now() - start_time
-            if passtime.seconds >= 4 * 60 * 60:
+            if passtime.seconds >= 5 * 60 * 60:
                 # 对(5,1~16)房间设置回到70，退出程序。
                 i=[]
                 for index in range(1, 16+1):
@@ -47,13 +47,13 @@ def step(i):
                 for room in i: 
                         Interface.controlRoom(*room[0:3])
                 break
-            elif passtime.seconds >= 2 * 60 * 60 and flag == 0:
+            elif passtime.seconds >= 3 * 60 * 60 and flag == 0:
                 flag = 1
-                # 对(5,1~15)房间给70->90的阶跃信号，记录阶跃响应曲线。
+                # 对(5,1~15)房间给80->100的阶跃信号，记录阶跃响应曲线。
                 i=[]
                 for index in range(1, 16+0):
-                    i.append((5, index, 90))
-                i.append((5, 16, 70))
+                    i.append((5, index, 100))
+                i.append((5, 16, 80))
                 for room in i: 
                         Interface.controlRoom(*room[0:3])
                 # 写入开度设置
@@ -86,7 +86,7 @@ if __name__ == '__main__':
     # 房间号
     i=[]
     for index in range(1, 16+1):
-        i.append((5, index, 70))
+        i.append((5, index, 80))
     
     step(i)
     
