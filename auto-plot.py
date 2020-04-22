@@ -28,7 +28,7 @@ def myplot(txtName, indexList):
     for index in indexList:
         # plot daily_temp_record
         df = pd.read_table(txtName + str(index) + ".txt", sep='[ |\t]', header=None, engine='python')
-        columnNames = ['time', 'floor_id', 'room_id', 'set_tmp', 'real_tmp', 'real_var_open', 'var_open']
+        columnNames = ['time', 'floor_id', 'room_id', 'set_tmp', 'real_tmp', 'real_val_open', 'val_open']
         df.columns = columnNames[0:df.shape[1]]
         df['time'] = pd.to_datetime(df['time'], format='%d:%H:%M:%S')
         all_df.append(df)
@@ -58,12 +58,12 @@ def myplot(txtName, indexList):
     
     for i, df in enumerate(all_df): # color='firebrick'
         index = indexList[i]
-        plt.plot_date(df['time'], df['real_var_open'],linestyle="-",marker="None",label=str(index))
+        plt.plot_date(df['time'], df['real_val_open'],linestyle="-",marker="None",label=str(index))
     # 坐标轴，标题设置
     plt.legend(bbox_to_anchor=(1.05, 0), loc=3, borderaxespad=0)
     plt.xlabel('Time',size=10)
-    plt.ylabel('var_open',size=10)
-    plt.title('Var_open record',size=10)
+    plt.ylabel('valve_open',size=10)
+    plt.title('Valve_open record',size=10)
     plt.gcf().autofmt_xdate()  # 自动旋转日期标记
     plt.grid(True)
     plt.axis("tight")

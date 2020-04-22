@@ -38,7 +38,7 @@ def step(roomList, step_begin_time = 3, step_end_time = 6, scale=[100, 80]):
     with open("./floor_5_step/setting.txt", "a") as f: 
         f.write("****************************************变化风阀开度**************************************\n")
         for room in i:
-            f.write("time:{}\troom:{}\tvar_open:{}\n".format(time.strftime("%Y-%m-%d %H:%M:%S"), room[0:2], room[2]))
+            f.write("time:{}\troom:{}\tval_open:{}\n".format(time.strftime("%Y-%m-%d %H:%M:%S"), room[0:2], room[2]))
     
     while True:
         try:
@@ -65,7 +65,7 @@ def step(roomList, step_begin_time = 3, step_end_time = 6, scale=[100, 80]):
                 with open("./floor_5_step/setting.txt", "a") as f: 
                     f.write("****************************************变化风阀开度**************************************\n")
                     for room in roomList:
-                        f.write("time:{}\troom:{}\tvar_open:{}\n".format(time.strftime("%Y-%m-%d %H:%M:%S"), room[0:2], room[2]))
+                        f.write("time:{}\troom:{}\tval_open:{}\n".format(time.strftime("%Y-%m-%d %H:%M:%S"), room[0:2], room[2]))
             # 记录房间温度变化曲线
             for room in roomList:
                 # 设定的温度, 当前温度, 当前开度, 当前时间
