@@ -9,18 +9,18 @@ import Interface
 import time
 from time import sleep
 
-def daily_temp_record(i):
+def daily_temp_record(roomList):
     TIME_FLAG = 0
     DAY = 1
-    for room in i:
+    for room in roomList:
         Interface.controlRoom(*room[0:3])
     # 写入开度设置
     with open("./daily_temp_record/setting.txt", "a") as f:
-        for room in i:
+        for room in roomList:
             f.write("time:{}\troom:{}\tkaidu:{}\n".format(time.strftime("%Y-%m-%d %H:%M:%S"), room[0:2], room[2]))
     while True:
         try:
-            for room in i:
+            for room in roomList:
                 #设定的温度, 当前温度, 当前开度
                 t_set, t_now, kaidu_now, time_now = Interface.dataForPID(*room[0:2])
                 # 写入日期信息
@@ -41,7 +41,7 @@ def daily_temp_record(i):
 
 if __name__ == '__main__':
     # 房间号
-    i = [(6, 1, 100), (6, 2, 100), (6, 3, 100), (6, 4, 60), (6, 5, 60), (6, 6, 60), (6, 7, 30), (6, 8, 30), (6, 9, 30), (6, 10, 10), (6, 11, 10), (6, 12, 10)]
+    roomList = [(6, 1, 100), (6, 2, 100), (6, 3, 100), (6, 4, 60), (6, 5, 60), (6, 6, 60), (6, 7, 30), (6, 8, 30), (6, 9, 30), (6, 10, 10), (6, 11, 10), (6, 12, 10)]
 
-    daily_temp_record(i)
+    daily_temp_record(roomList)
     

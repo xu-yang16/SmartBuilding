@@ -17,17 +17,22 @@ def del_old_dir(path):  # 获取目录路径
             os.remove(os.path.join(path,file))
     print("\n")
 
-def step(i):
+def step(roomList, step_begin_time = 3, step_end_time = 6, scale=[80, 100]):
     # 记录时间
     TIME_FLAG = 0
     DAY = 1
-    # flag=0标志着开度为70; flag=1标志着开度为80
+    # flag=0标志着开度为scale[0]; flag=1标志着开度为scale[1]
     flag = 0
     # 开始记录的时间
     start_time = datetime.datetime.now()
 
-    # 各房间风阀开度初始化为70
-    for room in i: 
+
+    # 设定初始值
+    roomList=[]
+    for index in range(1, 16+1):
+        roomList.append((5, index, scale[0]))
+    # 各房间风阀开度初始化为scale[0]
+    for room in roomList: 
         Interface.controlRoom(*room[0:3])
     # 写入开度设置
     with open("./floor_5_step/setting.txt", "a") as f: 
@@ -37,32 +42,32 @@ def step(i):
     
     while True:
         try:
-            # 设定开始阶跃的时刻: 5小时后
+            # 设定开始阶跃的时刻step_begin_time&结束阶跃的时刻step_end_time
             passtime = datetime.datetime.now() - start_time
-            if passtime.seconds >= 5 * 60 * 60:
+            if passtime.seconds >= step_end_time * 60 * 60:
                 # 对(5,1~16)房间设置回到70，退出程序。
-                i=[]
+                roomList=[]
                 for index in range(1, 16+1):
-                    i.append((5, index, 70))
-                for room in i: 
+                    roomList.append((5, index, scale[0]))
+                for room in roomList: 
                         Interface.controlRoom(*room[0:3])
                 break
-            elif passtime.seconds >= 3 * 60 * 60 and flag == 0:
+            elif passtime.seconds >= step_begin_time * 60 * 60 and flag == 0:
                 flag = 1
-                # 对(5,1~15)房间给80->100的阶跃信号，记录阶跃响应曲线。
-                i=[]
+                # 对roomList房间给step_begin_time->step_end_time的阶跃信号，记录阶跃响应曲线。
+                roomList=[]
                 for index in range(1, 16+0):
-                    i.append((5, index, 100))
-                i.append((5, 16, 80))
-                for room in i: 
+                    i.append((5, index, step_begin_time[1]))
+                roomList.append((5, 16, scale[0]))
+                for room in roomList: 
                         Interface.controlRoom(*room[0:3])
                 # 写入开度设置
                 with open("./floor_5_step/setting.txt", "a") as f: 
                     f.write("****************************************变化风阀开度**************************************\n")
-                    for room in i:
+                    for room in roomList:
                         f.write("time:{}\troom:{}\tvar_open:{}\n".format(time.strftime("%Y-%m-%d %H:%M:%S"), room[0:2], room[2]))
             # 记录房间温度变化曲线
-            for room in i:
+            for room in roomList:
                 # 设定的温度, 当前温度, 当前开度, 当前时间
                 t_set, t_now, kaidu_now, time_now = Interface.dataForPID(*room[0:2])
                 # 写入日期信息
@@ -83,12 +88,8 @@ def step(i):
 if __name__ == '__main__':
     # 删除上一次的文件
     del_old_dir("./floor_5_step/")
-    # 房间号
-    i=[]
-    for index in range(1, 16+1):
-        i.append((5, index, 80))
-    
-    step(i)
+    # 开始实验
+    step(roomList)
     
     
     

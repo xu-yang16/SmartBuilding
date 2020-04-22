@@ -13,10 +13,8 @@ def get_dir(path):  # 获取目录路径
                 print(os.path.join(path,file))
 
 if __name__ == "__main__":
-    index = 0
-    while 1:
-        print("index" + i)
-        sleep(1)
-        i +=1
-        if(i>=60):
-            break
+    roomList=[]
+    for index in range(1, 3 + 1):
+        roomList.append((5, index))
+    for i, room in enumerate(roomList):
+        print("{}th:{}".format(i,room))
