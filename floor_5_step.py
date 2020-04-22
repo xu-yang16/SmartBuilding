@@ -17,7 +17,7 @@ def del_old_dir(path):  # 获取目录路径
             os.remove(os.path.join(path,file))
     print("\n")
 
-def step(roomList, step_begin_time = 3, step_end_time = 6, scale=[80, 100]):
+def step(roomList, step_begin_time = 3, step_end_time = 6, scale=[100, 80]):
     # 记录时间
     TIME_FLAG = 0
     DAY = 1

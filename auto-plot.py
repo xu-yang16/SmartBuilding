@@ -34,7 +34,7 @@ def myplot(txtName, indexList):
         all_df.append(df)
 
     # 配置时间坐标轴
-    plt.figure()
+    fig = plt.figure()
 
     plt.subplot(2,1,1)
     for i, df in enumerate(all_df):
@@ -52,7 +52,7 @@ def myplot(txtName, indexList):
     autodates = AutoDateLocator()# 时间间隔自动选取
     plt.gca().xaxis.set_major_locator(autodates)
 
-    plt.subplot(2,1,2)
+    ax = fig.add_subplot(2,1,2)
     
     for i, df in enumerate(all_df): # color='firebrick'
         index = indexList[i]
@@ -69,6 +69,7 @@ def myplot(txtName, indexList):
     autodates = AutoDateLocator()# 时间间隔自动选取
     plt.gca().xaxis.set_major_locator(autodates)
     
+    ax.text(1.06,-0.3,time.strftime("%H:%M"), transform=ax.transAxes,bbox=dict(facecolor='red', alpha=0.5))
     plt.savefig("./realtime_figure/"+fig_name(txtName),dpi=500,bbox_inches='tight')
     plt.close()
 
@@ -93,7 +94,7 @@ def auto_plot(txtNameList):
 
 
 if __name__ == "__main__":
-    txtNameList = [("./daily_temp_record/state_in_6_", [1,2,3,4,5]),
-     ("./control_record/PID_50_5_15_room_5_", [1,2,3]),
+    txtNameList = [("./daily_temp_record/state_in_6_", [1,4,8,11]),
+     ("./control_record/PID_50_5_15_room_5_", [3]),
       ("./floor_5_step/state_in_5_", [1])]
     auto_plot(txtNameList)
