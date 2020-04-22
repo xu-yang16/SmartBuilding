@@ -40,6 +40,8 @@ def myplot(txtName, indexList):
     for i, df in enumerate(all_df):
         index = indexList[i]
         plt.plot_date(df['time'], df['real_tmp'],linestyle="-",marker="None",label=str(index))
+    df = all_df[0]
+    plt.axhline(y=df.loc[0,'set_tmp'],ls="--",c="coral")#添加水平直线
     # 坐标轴，标题设置
     plt.legend(bbox_to_anchor=(1.05, 0), loc=3, borderaxespad=0)
     plt.xticks([])
