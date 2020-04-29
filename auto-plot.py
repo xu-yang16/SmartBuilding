@@ -92,12 +92,13 @@ def auto_plot(txtNameList):
                 flag = True
         #except Exception as e:
         #    print("*********************Plot出现错误...*******************")
-        sleep(600)
+        sleep(300)
 
 
 if __name__ == "__main__":
     txtNameList = [("./daily_temp_record/state_in_6_", [1,4,8,11]),
-    ("./floor_5_step/state_in_5_", [1,5,9,13,16]),
-     ("./control_record/PID_26_43_3_room_5_", [1,6])]
+     ("./control_record/PID_50_5_15_room_5_", [1,5,7,9,13]),
+     ("./control_record_7/PID_room_7_", [1,5,7,9,13]),
+     ("./step_record/state_in_8_", [1,5,10])]
       
     auto_plot(txtNameList)

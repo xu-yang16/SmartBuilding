@@ -65,5 +65,6 @@ def myplot(txtName):
 
 
 if __name__ == "__main__":
-    txtName = "./control_record/state_in_5_2.txt"
-    myplot(txtName)
+    if 3>=1:
+        p=3
+    print(p)
