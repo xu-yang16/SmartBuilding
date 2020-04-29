@@ -17,7 +17,14 @@ def del_old_dir(path):  # 获取目录路径
             os.remove(os.path.join(path,file))
     print("\n")
 
-def step(roomList, step_begin_time = 3, step_end_time = 6, scale=[100, 80]):
+def write_setting(roomList):
+    # 写入开度设置
+    with open("./floor_5_step/setting.txt", "a") as f: 
+        f.write("****************************************变化风阀开度**************************************\n")
+        for room in roomList:
+            f.write("time:{}\troom:{}\tval_open:{}\n".format(time.strftime("%Y-%m-%d %H:%M:%S"), room[0:2], room[2]))
+
+def step(step_begin_time = 3, step_end_time = 6, scale=[30, 10]):
     # 记录时间
     TIME_FLAG = 0
     DAY = 1
@@ -35,10 +42,7 @@ def step(roomList, step_begin_time = 3, step_end_time = 6, scale=[100, 80]):
     for room in roomList: 
         Interface.controlRoom(*room[0:3])
     # 写入开度设置
-    with open("./floor_5_step/setting.txt", "a") as f: 
-        f.write("****************************************变化风阀开度**************************************\n")
-        for room in i:
-            f.write("time:{}\troom:{}\tval_open:{}\n".format(time.strftime("%Y-%m-%d %H:%M:%S"), room[0:2], room[2]))
+    write_setting(roomList)
     
     while True:
         try:
@@ -51,21 +55,20 @@ def step(roomList, step_begin_time = 3, step_end_time = 6, scale=[100, 80]):
                     roomList.append((5, index, scale[0]))
                 for room in roomList: 
                         Interface.controlRoom(*room[0:3])
+                # 写入开度设置
+                write_setting(roomList)
                 break
-            elif passtime.seconds >= step_begin_time * 60 * 60 and flag == 0:
+            elif passtime.seconds >=  step_begin_time * 60 * 60 and flag == 0:
                 flag = 1
                 # 对roomList房间给step_begin_time->step_end_time的阶跃信号，记录阶跃响应曲线。
                 roomList=[]
                 for index in range(1, 16+0):
-                    i.append((5, index, step_begin_time[1]))
+                    roomList.append((5, index, scale[1]))
                 roomList.append((5, 16, scale[0]))
                 for room in roomList: 
                         Interface.controlRoom(*room[0:3])
                 # 写入开度设置
-                with open("./floor_5_step/setting.txt", "a") as f: 
-                    f.write("****************************************变化风阀开度**************************************\n")
-                    for room in roomList:
-                        f.write("time:{}\troom:{}\tval_open:{}\n".format(time.strftime("%Y-%m-%d %H:%M:%S"), room[0:2], room[2]))
+                write_setting(roomList)
             # 记录房间温度变化曲线
             for room in roomList:
                 # 设定的温度, 当前温度, 当前开度, 当前时间
@@ -89,7 +92,7 @@ if __name__ == '__main__':
     # 删除上一次的文件
     del_old_dir("./floor_5_step/")
     # 开始实验
-    step(roomList)
+    step()
     
     
     
