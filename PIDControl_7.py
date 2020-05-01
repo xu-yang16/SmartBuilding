@@ -6,13 +6,13 @@ import time
 from time import sleep
 
 
-SET_TEMP = 25
+SET_TEMP = 22
 def PIDControl(Kp, Ki, Kd, roomList):
     # 记录天数信息
     TIME_FLAG = 0
     DAY = 1
     # 文件名
-    txtName = "./control_record_7/PID_room_".format(Kp, Ki, Kd)
+    txtName = "./control_record_7/PID_room_"
     # 初始值
     t_set = SET_TEMP
     error_last = [0] * len(roomList)
@@ -44,24 +44,21 @@ def PIDControl(Kp, Ki, Kd, roomList):
                 if int(time_now[0])>=0 and int(time_now[0])<=24:
                     # 控制律
                     error_now = t_set - t_now
-                    if -1.5<=error_now <= 1.5:
-                        p = 50
-                        i = 1
-                        d = 15
-                    else:
-                        p = Kp
-                        i = Ki
-                        d = Kd
-                    print("new={:.2f}-{}*({:.2f}-{:.2f})-{}*{:.2f}-{}*({:.2f}-2*{:.2f}+{:.2f})={:.2f}\n".format(val_open[i],p,error_now,error_last[i],i,error_now,d,error_now,error_last[i],error_llast[i],val_open[i] - p * (error_now - error_last[i]) - i * error_now - d * (error_now - 2 * error_last[i] + error_llast[i])))
-                    val_open[i] -= p * (error_now - error_last[i]) + i * error_now + d * (error_now - 2 * error_last[i] + error_llast[i])
-                    error_llast[i] = error_last[i]
-                    error_last[i] = error_now
-                    
-                    # 限制幅度
-                    if val_open[i] >= 100:
-                        val_open[i] = 100
-                    elif val_open[i] <= 0:
+                    if error_now >= 0.5:
                         val_open[i] = 0
+                    elif error_now <= -0.5:
+                        val_open[i] = 100
+                    else:
+                        print("new={:.2f}-{}*({:.2f}-{:.2f})-{}*{:.2f}-{}*({:.2f}-2*{:.2f}+{:.2f})={:.2f}\n".format(val_open[i],Kp,error_now,error_last[i],Ki,error_now,Kd,error_now,error_last[i],error_llast[i],val_open[i] - Kp * (error_now - error_last[i]) - Ki * error_now - Kd * (error_now - 2 * error_last[i] + error_llast[i])))
+                        val_open[i] -= Kp * (error_now - error_last[i]) + Ki * error_now + Kd * (error_now - 2 * error_last[i] + error_llast[i])
+                        error_llast[i] = error_last[i]
+                        error_last[i] = error_now
+                        
+                        # 限制幅度
+                        if val_open[i] >= 100:
+                            val_open[i] = 100
+                        elif val_open[i] <= 0:
+                            val_open[i] = 0
                     Interface.controlRoom(*room[0:2], val_open[i])
         except Exception as e:
             print("*********************读取温度数据出现错误...*******************")

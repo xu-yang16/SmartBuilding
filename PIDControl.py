@@ -6,13 +6,13 @@ import time
 from time import sleep
 
 
-SET_TEMP = 20
+SET_TEMP = 22
 def PIDControl(Kp, Ki, Kd, roomList):
     # 记录天数信息
     TIME_FLAG = 0
     DAY = 1
     # 文件名
-    txtName = "./control_record/PID_{}_{}_{}_room_".format(Kp, Ki, Kd)
+    txtName = "./control_record/PID_room_"
     # 初始值
     t_set = SET_TEMP
     error_last = [0] * len(roomList)

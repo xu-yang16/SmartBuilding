@@ -97,7 +97,7 @@ def auto_plot(txtNameList):
 
 if __name__ == "__main__":
     txtNameList = [("./daily_temp_record/state_in_6_", [1,4,8,11]),
-     ("./control_record/PID_50_5_15_room_5_", [1,5,7,9,13]),
+     ("./control_record/PID_room_5_", [1,5,7,9,13]),
      ("./control_record_7/PID_room_7_", [1,5,7,9,13]),
      ("./step_record/state_in_8_", [1,5,10])]
       
