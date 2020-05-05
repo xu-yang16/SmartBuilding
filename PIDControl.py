@@ -65,7 +65,7 @@ if __name__ == '__main__':
         roomList.append((5, index))
     
     # PID参数设置
-    Kp = 40
+    Kp = 30
     Ki = 5
     Kd = 5
 
