@@ -16,7 +16,7 @@ def del_old_dir(path):  # 获取目录路径
     print("\n")
 
 
-SET_TEMP = 22
+SET_TEMP = 20
 def PIDControl(Kp, Ki, Kd, roomList):
     # 记录天数信息
     TIME_FLAG = 0

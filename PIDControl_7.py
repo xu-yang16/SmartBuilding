@@ -83,7 +83,7 @@ if __name__ == '__main__':
     
     # PID参数设置
     Kp = 50
-    Ki = 5
+    Ki = 20
     Kd = 10
 
     PIDControl(Kp, Ki, Kd, roomList)
