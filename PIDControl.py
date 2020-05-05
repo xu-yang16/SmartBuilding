@@ -65,9 +65,9 @@ if __name__ == '__main__':
         roomList.append((5, index))
     
     # PID参数设置
-    Kp = 50
+    Kp = 40
     Ki = 5
-    Kd = 15
+    Kd = 5
 
     PIDControl(Kp, Ki, Kd, roomList)
     

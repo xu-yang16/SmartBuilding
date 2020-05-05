@@ -33,7 +33,6 @@ def step(step_begin_time = 3, step_end_time = 6, scale=[40, 20]):
     # 开始记录的时间
     start_time = datetime.datetime.now()
 
-
     # 设定初始值
     roomList=[]
     roomList.append((8, 1))
@@ -48,17 +47,18 @@ def step(step_begin_time = 3, step_end_time = 6, scale=[40, 20]):
     while True:
         try:
             # 设定开始阶跃的时刻step_begin_time&结束阶跃的时刻step_end_time
+            t_set, t_now, kaidu_now, time_now = Interface.dataForPID(*room[0:2])
             passtime = datetime.datetime.now() - start_time
-            if passtime.seconds >= step_end_time * 60 * 60:
+            if time_now[0] == '16':#passtime.seconds >= step_end_time * 60 * 60:
                 # 对(5,1~16)房间设置回到70，退出程序。
                 for room in roomList: 
                         Interface.controlRoom(*room[0:2],scale[0])
                 # 写入开度设置
                 write_setting(roomList, scale[0])
                 break
-            elif passtime.seconds >=  step_begin_time * 60 * 60 and flag == 0:
+            elif time_now[0] == '13' and flag == 0:# passtime.seconds >=  step_begin_time * 60 * 60 and flag == 0:
                 flag = 1
-                # 对roomList房间给step_begin_time->step_end_time的阶跃信号，记录阶跃响应曲线。
+                # 对roomList房间给阶跃信号，记录阶跃响应曲线。
                 for room in roomList: 
                         Interface.controlRoom(*room[0:2],scale[1])
                 # 写入开度设置

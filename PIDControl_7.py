@@ -44,9 +44,9 @@ def PIDControl(Kp, Ki, Kd, roomList):
                 if int(time_now[0])>=0 and int(time_now[0])<=24:
                     # 控制律
                     error_now = t_set - t_now
-                    if error_now >= 0.5:
+                    if error_now >= 100:
                         val_open[i] = 0
-                    elif error_now <= -0.5:
+                    elif error_now <= -100:
                         val_open[i] = 100
                     else:
                         print("new={:.2f}-{}*({:.2f}-{:.2f})-{}*{:.2f}-{}*({:.2f}-2*{:.2f}+{:.2f})={:.2f}\n".format(val_open[i],Kp,error_now,error_last[i],Ki,error_now,Kd,error_now,error_last[i],error_llast[i],val_open[i] - Kp * (error_now - error_last[i]) - Ki * error_now - Kd * (error_now - 2 * error_last[i] + error_llast[i])))
@@ -71,7 +71,7 @@ if __name__ == '__main__':
     # PID参数设置
     Kp = 50
     Ki = 10
-    Kd = 15
+    Kd = 5
 
     PIDControl(Kp, Ki, Kd, roomList)
     
