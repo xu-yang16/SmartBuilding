@@ -3,7 +3,17 @@ import sys
 sys.path.append('../IoT')
 import Interface
 import time
+import os
 from time import sleep
+
+
+def del_old_dir(path):  # 获取目录路径
+    print("删除文件：")
+    for root, dirs, files in os.walk(path):
+        for file in files:
+            print(os.path.join(path,file))
+            os.remove(os.path.join(path,file))
+    print("\n")
 
 
 SET_TEMP = 22
@@ -64,13 +74,16 @@ def PIDControl(Kp, Ki, Kd, roomList):
             print("*********************读取温度数据出现错误...*******************")
         sleep(60)
 if __name__ == '__main__':
+    # 删除上一次的文件
+    del_old_dir("./control_record_7/")
+
     roomList=[]
     for index in range(1, 16 + 1):
         roomList.append((7, index))
     
     # PID参数设置
-    Kp = 30
-    Ki = 10
+    Kp = 50
+    Ki = 5
     Kd = 10
 
     PIDControl(Kp, Ki, Kd, roomList)
